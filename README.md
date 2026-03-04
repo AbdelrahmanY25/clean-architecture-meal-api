@@ -163,7 +163,7 @@ Request validation is handled automatically via **FluentValidation** with **Shar
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<your-username>/clean-architecture-meal-api.git
+   git clone https://github.com/AbdelrahmanY25/clean-architecture-meal-api.git
    cd clean-architecture-meal-api
    ```
 
