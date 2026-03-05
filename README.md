@@ -6,6 +6,12 @@ A **REST API** for managing meals with customizable option groups and items, bui
 
 This project demonstrates a layered Clean Architecture approach to building a Web API. The domain models a **meal ordering system** where each meal can have multiple **option groups** (e.g., "Size", "Toppings"), and each group contains selectable **option items** (e.g., "Large", "Cheese").
 
+### Recent Updates ✨
+
+- **Mapster Integration** - High-performance object-to-object mapping (10-100x faster than AutoMapper)
+- **New Specification Classes** - `AllMealsWithOptionsAdnOptionItems` for retrieving all meals with full projections
+- **Enhanced Specification Pattern** - Selector-based specifications for direct DTO mapping
+
 **Example structure:**
 ```
 Meal: "Burger" ($10.00)
@@ -52,7 +58,12 @@ Contains all business logic and application rules. Has **no dependency** on infr
 - **Services** — `MealService`, `MealOptionsService`, `OptionItemsService` implement the business workflows
 - **Contracts** — Request/Response records (`CreateMealRequest`, `MealResponse`, etc.)
 - **Validators** — FluentValidation rules for all incoming requests with nested validation support
-- **Specifications** — Generic Specification pattern for building type-safe queries (`ISpecification<T>`, `Specification<T, TResult>`)
+- **Specifications** — Generic Specification pattern for building type-safe queries:
+  - `ISpecification<T>` - Base interface for query specifications
+  - `ISpecification<T, TResult>` - Extended interface with projection selector
+  - `MealByIdWithOptionsAndItemsSpec` - Single meal query with nested includes
+  - `AllMealsWithOptionsAdnOptionItems` - All meals with full DTO projection
+- **Mapping** — Mapster configuration for high-performance object mapping
 - **Result Pattern** — `Result<T>` / `Error` abstractions for explicit success/failure handling without exceptions
 - **Interfaces** — `IRepository<T>` and service interfaces defining contracts for the Infrastructure and API layers
 
@@ -83,6 +94,7 @@ The entry point and composition root:
 |---|---|---|
 | `POST` | `/api/meals/add` | Create a new meal with option groups and items |
 | `GET` | `/api/meals/{mealId}` | Get a meal by ID including all options and items |
+| `GET` | `/api/meals` | Get all meals with full details |
 
 ### Create Meal — Request Body Example
 
@@ -149,7 +161,8 @@ Request validation is handled automatically via **FluentValidation** with **Shar
 - **ASP.NET Core** Web API
 - **Entity Framework Core 10** (SQL Server)
 - **FluentValidation 12** with auto-validation
-- **Specification Pattern** (custom implementation)
+- **Mapster** - High-performance object mapping
+- **Specification Pattern** (custom implementation with projection support)
 - **Result Pattern** for error handling
 
 ## ⚙️ Getting Started
@@ -163,7 +176,7 @@ Request validation is handled automatically via **FluentValidation** with **Shar
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<your-username>/clean-architecture-meal-api.git
+   git clone https://github.com/AbdelrahmanY25/clean-architecture-meal-api.git
    cd clean-architecture-meal-api
    ```
 
@@ -239,4 +252,4 @@ Request validation is handled automatically via **FluentValidation** with **Shar
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source.

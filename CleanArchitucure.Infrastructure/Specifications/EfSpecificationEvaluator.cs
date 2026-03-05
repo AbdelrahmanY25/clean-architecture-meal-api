@@ -9,7 +9,8 @@ public static class EfSpecificationEvaluator<TEntity> where TEntity : class
 		if (spec.Criteria is not null)
 			query = query.Where(spec.Criteria);
 
-		query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+		if (spec.Includes is not null)
+			query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
 
 		if (spec.OrderBy is not null)
 			query = query.OrderBy(spec.OrderBy);

@@ -10,6 +10,8 @@ public static class DependencyInjection
 
 			services.AddServices();
 
+			services.AddMapsterConfig();
+
 			return services;
 		}
 
@@ -27,6 +29,16 @@ public static class DependencyInjection
 			services.AddScoped<IMealService, MealService>();
 			services.AddScoped<IMealOptionsService, MealOptionsService>();
 			services.AddScoped<IOptionItemsService, OptionItemsService>();
+
+			return services;
+		}
+
+		private IServiceCollection AddMapsterConfig()
+		{
+			var mappingConfig = TypeAdapterConfig.GlobalSettings;
+			mappingConfig.Scan(typeof(MappingConfig).Assembly);
+
+			services.AddSingleton<IMapper>(new Mapper(mappingConfig));
 
 			return services;
 		}
